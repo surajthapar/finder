@@ -29,5 +29,8 @@ setup(
         'paste.app_factory': [
             'main = finder:main',
         ],
+        'console_scripts': [
+            'index=finder.index:main',
+        ],
     },
 )
