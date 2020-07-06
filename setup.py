@@ -11,7 +11,7 @@ setup(
         'finder',
     ],
     install_requires=[
-        'scout',
+        # 'scout',  # Install scout seperately from dist .tar.gz
         'plaster_pastedeploy',
         'pyramid',
         'waitress',
