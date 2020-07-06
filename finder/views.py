@@ -1,3 +1,4 @@
+import asyncio
 from pyramid.view import view_config
 from . import controller
 
@@ -38,8 +39,12 @@ def search_books(request):
             }
 
     results = list()
+    documents = set()
     for query in queries:
-        results.append(controller.search_book_index(query, limit, database))
+        res = controller.search_book_index(query, limit, database)
+        documents |= set([book['id'] for book in res])
+        results.append(res)
 
+    authors = asyncio.run(controller.get_authors(documents))
     request.response.status_code = 200
-    return {"k": limit, "queries": queries, "results": results}
+    return {"r": results, "a": authors}
