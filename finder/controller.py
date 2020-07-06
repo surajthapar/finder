@@ -30,5 +30,11 @@ async def get_authors(ids):
                     raise UnresponsiveAuthorAPI(
                                 f"Response Code : {response.status}"
                             )
-
-    return await asyncio.gather(*[hit_author(id) for id in ids])
+    # Return a dictionary of all requested authors
+    # {"34": "Judith Rich Harris", "3": "James Webb Young"}
+    return {
+                id: author
+                for id, author in await asyncio.gather(
+                    *(hit_author(id) for id in ids)
+                )
+            }
