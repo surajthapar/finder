@@ -17,11 +17,10 @@ setup(
         'waitress',
         'pyramid_retry',
     ],
-    python_requires='>=3.6.5, <4',
+    python_requires='>=3.7, <4',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Framework :: Pyramid',
-        'Programming Language :: Python :: 3.6.5',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
