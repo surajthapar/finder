@@ -6,8 +6,8 @@ def main(global_config, **settings):
     """
     with Configurator(settings=settings) as config:
 
-        # Project : Books
-        config.include('books.routes')
-        config.scan('books')
+        # Project : Books Finder
+        config.include('.routes')
+        config.scan('finder')
 
     return config.make_wsgi_app()
