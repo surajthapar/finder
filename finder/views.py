@@ -38,13 +38,23 @@ def search_books(request):
                 "description": "Limit can't be less than 1 or greater than 50."
             }
 
-    results = list()
+    multi_search_results = list()
     documents = set()
     for query in queries:
-        res = controller.search_book_index(query, limit, database)
-        documents |= set([book['id'] for book in res])
-        results.append(res)
+        try:
+            res = controller.search_book_index(query, limit, database)
+        except LookupError:
+            res = None
+        if res:
+            documents |= set([book['id'] for book in res])
+            multi_search_results.append(res)
+        else:
+            multi_search_results.append([])
 
     authors = asyncio.run(controller.get_authors(documents))
+    for results in multi_search_results:
+        if results:
+            for doc in results:
+                doc['author'] = authors[doc['id']]
     request.response.status_code = 200
-    return {"r": results, "a": authors}
+    return multi_search_results
