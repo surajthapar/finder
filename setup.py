@@ -16,6 +16,9 @@ setup(
         'pyramid',
         'waitress',
         'pyramid_retry',
+        'aiohttp',
+        'cchardet',
+        'aiodns',
     ],
     python_requires='>=3.7, <4',
     classifiers=[
