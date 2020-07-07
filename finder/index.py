@@ -20,6 +20,10 @@ OR
 
     $ pipenv run index env.ini --corpus data.json --database custom.db --slicing [2,5,7]
 
+For help
+
+    $ pipenv run index --help
+
 """
 
 from pyramid.paster import setup_logging
