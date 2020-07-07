@@ -1,4 +1,4 @@
-Finder : Book Search API
+`Finder <https://surajthapar.github.io/finder/index.html>`_ : Book Search API
 =====================
 
 **Finder** lets you search the books in bulk via HTTP APIs.
