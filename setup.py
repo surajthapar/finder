@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='finder',
-    version='0.1dev',
+    version='0.1',
     description='Book search API in Python.',
     author='Suraj Thapar',
     author_email='surajthapar.in@gmail.com',
@@ -22,7 +22,7 @@ setup(
     ],
     python_requires='>=3.7, <4',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
         'Framework :: Pyramid',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
