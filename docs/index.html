@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finder : Book Search API &#8212; finder 0.1 beta documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Problem Statement" href="finder/problem.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="finder-book-search-api">
+<h1>Finder : Book Search API<a class="headerlink" href="#finder-book-search-api" title="Permalink to this headline">¶</a></h1>
+<p><strong>Finder</strong> lets you search the books in bulk via HTTP APIs.</p>
+<p>Finder is built on <cite>Pyramid</cite>. It uses <cite>aiohttp</cite> to make async
+calls to the API, making it much faster than simple <cite>requests</cite>.
+Finder uses <a class="reference external" href="https://github.com/surajthapar/Scout">Scout</a> to make book search possible.</p>
+<p><em>Please install</em> <a class="reference external" href="https://github.com/surajthapar/Scout">Scout</a> <em>manually before proceeding.</em></p>
+<hr class="docutils" />
+<p><strong>Book Search APIs</strong></p>
+<p><em>Request</em></p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl --location --request POST <span class="s1">&#39;http://localhost:6543/search/&#39;</span> <span class="se">\</span>
+--header <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+--data-raw <span class="s1">&#39;{ &quot;limit&quot; : 10, &quot;queries&quot; : [&quot;believe&quot;, &quot;changes&quot;] }&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl>
+<dt><em>Response</em></dt><dd><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+   <span class="p">[</span>
+       <span class="p">{</span>
+           <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+           <span class="s2">&quot;summary&quot;</span><span class="o">:</span> <span class="s2">&quot;The Book in Three Sentences: The 10X</span>
+<span class="s2">                       Rule says that 1) you should set</span>
+<span class="s2">                       targets for yourself that are 10X</span>
+<span class="s2">                       greater than what you believe you</span>
+<span class="s2">                       can achieve and 2) you should take</span>
+<span class="s2">                       actions that are 10X greater than</span>
+<span class="s2">                       what you believe are necessary to</span>
+<span class="s2">                       achieve your goals. The biggest</span>
+<span class="s2">                       mistake most people make in life is</span>
+<span class="s2">                       not setting goals high enough. Taking</span>
+<span class="s2">                       massive action is the only way to</span>
+<span class="s2">                       fulfill your true potential.&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;query&quot;</span><span class="o">:</span> <span class="s2">&quot;believe&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;Grant Cardone&quot;</span>
+       <span class="p">},</span>
+       <span class="p">{</span>
+           <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">28</span><span class="p">,</span>
+           <span class="s2">&quot;summary&quot;</span><span class="o">:</span> <span class="s2">&quot;The Book in Three Sentences: This book</span>
+<span class="s2">                       is a collection of transcriptions from</span>
+<span class="s2">                       a series of interviews between writer</span>
+<span class="s2">                       Calvin Tomkins and artist Marcel</span>
+<span class="s2">                       Duchamp. Duchamp believed strongly in</span>
+<span class="s2">                       doing work that was free from tradition</span>
+<span class="s2">                       and starting with as much of a blank</span>
+<span class="s2">                       slate as possible. He was also quite</span>
+<span class="s2">                       playful, worked slowly, and saw</span>
+<span class="s2">                       laziness as a good thing.&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;query&quot;</span><span class="o">:</span> <span class="s2">&quot;believe&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;Calvin Tomkins&quot;</span>
+       <span class="p">}</span>
+   <span class="p">],</span>
+   <span class="p">[</span>
+       <span class="p">{</span>
+           <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">24</span><span class="p">,</span>
+           <span class="s2">&quot;summary&quot;</span><span class="o">:</span> <span class="s2">&quot;The Book in Three Sentences: Over the</span>
+<span class="s2">                       course of history, human behavior has</span>
+<span class="s2">                       changed, butnot human nature. No matter</span>
+<span class="s2">                       who is in power, the rewards gradually</span>
+<span class="s2">                       accrue to the most clever and talented</span>
+<span class="s2">                       individuals. Ideas are the strongest</span>
+<span class="s2">                       things of all in history because they</span>
+<span class="s2">                       can be passed down and change the</span>
+<span class="s2">                       behavior of future generations—even a</span>
+<span class="s2">                       gun was originally an idea.&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;query&quot;</span><span class="o">:</span> <span class="s2">&quot;changes&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;Will and Ariel Durant&quot;</span>
+       <span class="p">},</span>
+       <span class="p">{</span>
+           <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">52</span><span class="p">,</span>
+           <span class="s2">&quot;summary&quot;</span><span class="o">:</span> <span class="s2">&quot;The Book in Three Sentences: Behavioral</span>
+<span class="s2">                       problems, not technical skills, are what</span>
+<span class="s2">                       separate the great from the near great.</span>
+<span class="s2">                       Incredible results can come from</span>
+<span class="s2">                       practicing basic behaviors like saying</span>
+<span class="s2">                       thank you, listening well, thinking</span>
+<span class="s2">                       before you speak, and apologizing for</span>
+<span class="s2">                       your mistakes. The first step to change</span>
+<span class="s2">                       is wanting to change.&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;query&quot;</span><span class="o">:</span> <span class="s2">&quot;changes&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;Marshall Goldsmith&quot;</span>
+       <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>If you are looking for information on a specific function, class, or method,
+this part of the documentation is for you.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="finder/problem.html">Problem Statement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="finder/problem.html#author-api">Author API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/problem.html#user-inputs">User Inputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/problem.html#api-results">API Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="finder/installation.html">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="finder/installation.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/installation.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/installation.html#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="finder/index.html">finder.Indexing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="finder/index.html#books-indexing-script">Books Indexing Script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="finder/api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="finder/api.html#module-finder.routes">finder.routes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/api.html#module-finder.controller">finder.controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/api.html#module-finder.views">finder.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finder/api.html#module-finder.exceptions">finder.exceptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">finder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="finder/problem.html">Problem Statement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finder/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finder/index.html">finder.Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finder/api.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="finder/problem.html" title="next chapter">Problem Statement</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Suraj Thapar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

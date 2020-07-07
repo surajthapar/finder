@@ -1,0 +1,31 @@
+# Install
+## Installation
+
+To install **Finder**, make sure you have the latest stable dist available. 
+
+> Pre-requisite : Install [Scout](https://github.com/surajthapar/Scout) before proceeding.
+
+Then simply install the current version :
+
+```bash
+pipenv install "."
+```
+
+## Usage
+
+```bash
+pipenv run pserve env.ini
+```
+
+## Configuration
+
+The Pyramid app can be configured using `env.ini` configuration file.
+To learn more about available variables, check [Pyramid's documentation](https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/environment.html).
+
+#### Finder app's custom variables
+
+Database is used to specify the default db to query.
+
+```ini
+database = scout.db
+```

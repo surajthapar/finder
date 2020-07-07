@@ -11,6 +11,22 @@ def search_book_index(query: str,
                       ) -> List[Dict[str, str]]:
     """Search book index uses Scout search engine to fetch results.
 
+    Returns a list of book results for a single query.
+    .. code-block::
+
+        [
+            {
+                "id": "34",
+                "summary": "The Book in Three Sentences: Ultimately, profit is the only valid..",
+                "query": "autistic"
+            },
+            {
+                "id": "3",
+                "summary": "The Book in Three Sentences: Autism, that truth was committing..",
+                "query": "autistic"
+            },
+        ]
+
     :param query: User input query terms.
     :type query: str
     :param limit: Maximum results to fetch.
@@ -36,6 +52,12 @@ async def get_authors(ids: List[str]) -> Dict[str, str]:
     5 folds in 10 results.
 
     TODO : Caching implementation to reduce server load.
+
+    Returns a dictionary of all requested authors
+    .. code-block::
+
+        {"34": "Judith Rich Harris", "3": "James Webb Young"}
+
 
     :param ids: List of book id.
     :type ids: List[str]

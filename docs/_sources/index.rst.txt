@@ -1,35 +1,30 @@
-import asyncio
-from typing import List, Dict
-from pyramid.view import view_config
-from . import controller
+Finder : Book Search API
+========================
 
+**Finder** lets you search the books in bulk via HTTP APIs.
 
-@view_config(route_name='book_search', request_method='POST', renderer='json')
-def search_books(request) -> List[List[Dict[str, str]]]:
-    """Search Books View
+Finder is built on `Pyramid`. It uses `aiohttp` to make async
+calls to the API, making it much faster than simple `requests`.
+Finder uses `Scout <https://github.com/surajthapar/Scout>`_ to make book search possible.
 
-    :Route Name: `book_search`
-    :Request Mode: POST
+*Please install* `Scout <https://github.com/surajthapar/Scout>`_ *manually before proceeding.*
 
-    These **parameters** should be passed in JSON Request Body.
+-------------------
 
-    limit: int
-       Maximum number of results per query.
-       Limit cannot be less than 1 or greater than 50.
-    queries: list
-       Query strings passed in a list.
+**Book Search APIs**
 
-    **Response**
+*Request*
 
-    :200: OK
-    :400: BAD REQUEST
-    :500: INTERNAL SERVER ERROR
+      .. code-block:: bash
 
-    A JSON response is sent back for response code `200 OK`.
+         curl --location --request POST 'http://localhost:6543/search/' \
+         --header 'Content-Type: application/json' \
+         --data-raw '{ "limit" : 10, "queries" : ["believe", "changes"] }'
 
-    .. code-block::
+*Response*
+      .. code-block:: javascript
 
-        [
+         [
             [
                 {
                     "id": 1,
@@ -95,62 +90,22 @@ def search_books(request) -> List[List[Dict[str, str]]]:
                     "author": "Marshall Goldsmith"
                 }
             ]
-        ]
+         ]
 
+Documentation
+-------------
 
-    :return: List of List of Search Results for Multiple Queries.
-    :rtype: List[List[Dict[str, str]]]
-    """
-    try:
-        database = request.registry.settings['database']
-    except KeyError:
-        request.response.status = 500
-        return {
-            "error": "Internal Server Error",
-            "description": "Database not setup in config."
-        }
+If you are looking for information on a specific function, class, or method,
+this part of the documentation is for you.
 
-    try:
-        limit = request.json_body['limit']
-        queries = request.json_body['queries']
-    except KeyError as e:
-        request.response.status = 400
-        return {
-            "error": "Bad Request",
-            "description": f"Mandatory json body parameter {e} is missing."
-        }
+.. toctree::
+   :maxdepth: 2
 
-    if not isinstance(limit, int):
-        request.response.status = 400
-        return {
-            "error": "Bad Request",
-            "description": "Limit must be an integer."
-        }
-    else:
-        if limit < 1 or limit > 50:
-            request.response.status = 400
-            return {
-                "error": "Bad Request",
-                "description": "Limit can't be less than 1 or greater than 50."
-            }
+   finder/problem
+   finder/installation
+   finder/index
+   finder/api
 
-    multi_search_results = list()
-    documents = set()
-    for query in queries:
-        try:
-            res = controller.search_book_index(query, limit, database)
-        except LookupError:
-            res = None
-        if res:
-            documents |= set([book['id'] for book in res])
-            multi_search_results.append(res)
-        else:
-            multi_search_results.append([])
-
-    authors = asyncio.run(controller.get_authors(documents))
-    for results in multi_search_results:
-        if results:
-            for doc in results:
-                doc['author'] = authors[doc['id']]
-    request.response.status_code = 200
-    return multi_search_results
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

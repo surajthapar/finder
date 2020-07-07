@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference &#8212; finder 0.1 beta documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="finder.Indexing" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-finder.routes">
+<span id="finder-routes"></span><h2>finder.routes<a class="headerlink" href="#module-finder.routes" title="Permalink to this headline">¶</a></h2>
+<p>API urls</p>
+<dl class="field-list simple">
+<dt class="field-odd">Route Name</dt>
+<dd class="field-odd"><p>book_search</p>
+</dd>
+<dt class="field-even">Route URL</dt>
+<dd class="field-even"><p>/search/</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="module-finder.controller">
+<span id="finder-controller"></span><h2>finder.controller<a class="headerlink" href="#module-finder.controller" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="finder.controller.get_authors">
+<em class="property">async </em><code class="sig-prename descclassname">finder.controller.</code><code class="sig-name descname">get_authors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ids</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><a class="headerlink" href="#finder.controller.get_authors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get authors asynchronously fetches Book Authors from Author API.</p>
+<p>Author API is hit in async manner. This reduces the load time by
+5 folds in 10 results.</p>
+<p>TODO : Caching implementation to reduce server load.</p>
+<p>Returns a dictionary of all requested authors
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;34&quot;</span><span class="p">:</span> <span class="s2">&quot;Judith Rich Harris&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="s2">&quot;James Webb Young&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ids</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of book id.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary map of (id, author).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="finder.controller.search_book_index">
+<code class="sig-prename descclassname">finder.controller.</code><code class="sig-name descname">search_book_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">limit</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">database</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><span class="p">]</span><a class="headerlink" href="#finder.controller.search_book_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search book index uses Scout search engine to fetch results.</p>
+<p>Returns a list of book results for a single query.
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;34&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;The Book in Three Sentences: Ultimately, profit is the only valid..&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;autistic&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;The Book in Three Sentences: Autism, that truth was committing..&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;autistic&quot;</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>str</em>) – User input query terms.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Maximum results to fetch.</p></li>
+<li><p><strong>database</strong> (<em>str</em>) – Scout index SQLite3 database file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of results with Book’s id, summary and query.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[Dict[str, str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-finder.views">
+<span id="finder-views"></span><h2>finder.views<a class="headerlink" href="#module-finder.views" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="finder.views.search_books">
+<code class="sig-prename descclassname">finder.views.</code><code class="sig-name descname">search_books</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><span class="p">]</span><span class="p">]</span><a class="headerlink" href="#finder.views.search_books" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search Books View</p>
+<dl class="field-list simple">
+<dt class="field-odd">Route Name</dt>
+<dd class="field-odd"><p><cite>book_search</cite></p>
+</dd>
+<dt class="field-even">Request Mode</dt>
+<dd class="field-even"><p>POST</p>
+</dd>
+</dl>
+<p>These <strong>parameters</strong> should be passed in JSON Request Body.</p>
+<dl class="simple">
+<dt>limit: int</dt><dd><p>Maximum number of results per query.
+Limit cannot be less than 1 or greater than 50.</p>
+</dd>
+<dt>queries: list</dt><dd><p>Query strings passed in a list.</p>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">200</dt>
+<dd class="field-odd"><p>OK</p>
+</dd>
+<dt class="field-even">400</dt>
+<dd class="field-even"><p>BAD REQUEST</p>
+</dd>
+<dt class="field-odd">500</dt>
+<dd class="field-odd"><p>INTERNAL SERVER ERROR</p>
+</dd>
+</dl>
+<p>A JSON response is sent back for response code <cite>200 OK</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[
+    [
+        {
+            &quot;id&quot;: 1,
+            &quot;summary&quot;: &quot;The Book in Three Sentences: The 10X
+                        Rule says that 1) you should set
+                        targets for yourself that are 10X
+                        greater than what you believe you
+                        can achieve and 2) you should take
+                        actions that are 10X greater than
+                        what you believe are necessary to
+                        achieve your goals. The biggest
+                        mistake most people make in life is
+                        not setting goals high enough. Taking
+                        massive action is the only way to
+                        fulfill your true potential.&quot;,
+            &quot;query&quot;: &quot;believe&quot;,
+            &quot;author&quot;: &quot;Grant Cardone&quot;
+        },
+        {
+            &quot;id&quot;: 28,
+            &quot;summary&quot;: &quot;The Book in Three Sentences: This book
+                        is a collection of transcriptions from
+                        a series of interviews between writer
+                        Calvin Tomkins and artist Marcel
+                        Duchamp. Duchamp believed strongly in
+                        doing work that was free from tradition
+                        and starting with as much of a blank
+                        slate as possible. He was also quite
+                        playful, worked slowly, and saw
+                        laziness as a good thing.&quot;,
+            &quot;query&quot;: &quot;believe&quot;,
+            &quot;author&quot;: &quot;Calvin Tomkins&quot;
+        }
+    ],
+    [
+        {
+            &quot;id&quot;: 24,
+            &quot;summary&quot;: &quot;The Book in Three Sentences: Over the
+                        course of history, human behavior has
+                        changed, butnot human nature. No matter
+                        who is in power, the rewards gradually
+                        accrue to the most clever and talented
+                        individuals. Ideas are the strongest
+                        things of all in history because they
+                        can be passed down and change the
+                        behavior of future generations—even a
+                        gun was originally an idea.&quot;,
+            &quot;query&quot;: &quot;changes&quot;,
+            &quot;author&quot;: &quot;Will and Ariel Durant&quot;
+        },
+        {
+            &quot;id&quot;: 52,
+            &quot;summary&quot;: &quot;The Book in Three Sentences: Behavioral
+                        problems, not technical skills, are what
+                        separate the great from the near great.
+                        Incredible results can come from
+                        practicing basic behaviors like saying
+                        thank you, listening well, thinking
+                        before you speak, and apologizing for
+                        your mistakes. The first step to change
+                        is wanting to change.&quot;,
+            &quot;query&quot;: &quot;changes&quot;,
+            &quot;author&quot;: &quot;Marshall Goldsmith&quot;
+        }
+    ]
+]
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of List of Search Results for Multiple Queries.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[List[Dict[str, str]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-finder.exceptions">
+<span id="finder-exceptions"></span><h2>finder.exceptions<a class="headerlink" href="#module-finder.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="finder.exceptions.UnresponsiveAuthorAPI">
+<em class="property">exception </em><code class="sig-prename descclassname">finder.exceptions.</code><code class="sig-name descname">UnresponsiveAuthorAPI</code><a class="headerlink" href="#finder.exceptions.UnresponsiveAuthorAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when author APIs throw unknown error</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">finder</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="problem.html">Problem Statement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">finder.Indexing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-finder.routes">finder.routes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-finder.controller">finder.controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-finder.views">finder.views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-finder.exceptions">finder.exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">finder.Indexing</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Suraj Thapar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/finder/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

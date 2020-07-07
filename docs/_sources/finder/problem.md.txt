@@ -1,0 +1,47 @@
+# Problem Statement
+
+**Search Engine Challenge : APIs**
+
+To make [Scout's](https://github.com/surajthapar/Scout) functionality available remotely as a service, so users can find coursebook summaries anywhere in the world.
+
+##### Author API
+
+The information about the book author is provided by another micro-service which you can call ​`https://ie4djxzt8j.execute-api.eu-west-1.amazonaws.com/coding​`. The api accepts POST ​application/json​ content like `​{'book_id: integer}`​ and returns the book author ​`{'author': string}`.​
+
+## User Inputs
+
+A list ​of​ queries ​and​ number ​of​ results to ​return​ f​or​ each queries.
+
+##### Search Queries : *list(str)*
+> eg. `[​"is your problems"​, ​"achieve take book"​]`
+##### K - Max results to return : *int*
+> eg. `3`
+
+
+## API Results
+
+A list ​of​ lists ​of​ books.
+
+```
+[
+    [
+        {
+            "summary": "The Book in Three Sentences: Practicing meditation and 
+            mindfulness will make you at least 10 percent happier....",
+            "id": 0
+        },
+        {
+            "summary": "The Book in Three Sentences: Finding something important 
+            and meaningful in your life is the most productive use of...",
+            "id": 48
+        }
+    ],
+    [
+        {
+            "summary": "The Book in Three Sentences: Everything in life is an 
+            invention. If you choose to look at your life in a new way...",
+            "id": 7
+        }
+    ]
+]
+```

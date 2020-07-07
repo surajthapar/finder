@@ -1,0 +1,5 @@
+finder.Indexing
+***************
+
+.. automodule:: finder.index
+   :members:

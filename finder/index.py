@@ -1,26 +1,39 @@
-"""Books Indexing Script
+"""
+Books Indexing Script
+---------------------
 
 This script uses Scout to index book summary data. This index is
 later used for realtime searches.
 
 Make sure you include this script's relative import path in
-setup.py; Specifically, setup –> entry_points –> console_scripts.
+``setup.py``; 
+
+Specifically, ``setup –> entry_points –> console_scripts``.
+
 You may launch the script by calling it from the virtualenv using
-pipenv. You must include the configuration file, e.g. env.ini
+pipenv. You must include the configuration file, e.g. ``env.ini``
 
 To install the script,
+
+.. code-block::
 
     $ pipenv install -e "."
 
 To run the script,
 
+.. code-block::
+
     $ pipenv run index env.ini --corpus data.json
 
 OR
 
+.. code-block::
+
     $ pipenv run index env.ini --corpus data.json --database custom.db --slicing [2,5,7]
 
 For help
+
+.. code-block::
 
     $ pipenv run index --help
 

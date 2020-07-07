@@ -1,8 +1,7 @@
-"""List of API urls
+"""API urls
 
-| Route Name  | URL      |
---------------------------
-| book_search | /search/ |
+:Route Name: book_search
+:Route URL: /search/
 
 """
 
