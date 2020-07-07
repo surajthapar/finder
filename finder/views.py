@@ -1,10 +1,44 @@
 import asyncio
+from typing import List, Dict
 from pyramid.view import view_config
 from . import controller
 
 
 @view_config(route_name='book_search', request_method='POST', renderer='json')
-def search_books(request):
+def search_books(request) -> List[List[Dict[str, str]]]:
+    """Search Books View
+
+    Route Name
+    ----------
+    `book_search`
+
+    Request Mode
+    ------------
+    POST
+
+    Parameters
+    ----------
+    These parameters should be passed in JSON Request Body.
+
+    limit: int
+       Maximum number of results per query.
+       Limit cannot be less than 1 or greater than 50.
+    queries: list
+       Query strings passed in a list.
+
+    Response Code
+    -------------
+    200 OK
+    400 BAD REQUEST
+    500 INTERNAL SERVER ERROR
+
+    Response
+    --------
+    A JSON response is sent back for response code `200 OK`.
+
+    :return: List of List of Search Results for Multiple Queries.
+    :rtype: List[List[Dict[str, str]]]
+    """
     try:
         database = request.registry.settings['database']
     except KeyError:
